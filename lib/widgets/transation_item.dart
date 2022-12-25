@@ -15,6 +15,7 @@ class TransactionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('build() TransactionItem');
     return Card(
       elevation: 6,
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
