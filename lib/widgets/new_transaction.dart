@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import './adaptive_button.dart';
+
 class NewTransaction extends StatefulWidget {
   final Function addTx;
   const NewTransaction(
@@ -55,57 +57,58 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            TextField(
-              controller: _titleController,
-              decoration: const InputDecoration(labelText: 'Title'),
-              onSubmitted: (_) => _submitData(),
-              // onChanged: (val) => titleInput = val,
-            ),
-            TextField(
-              controller: _amountController,
-              decoration: const InputDecoration(labelText: 'Amount'),
-              keyboardType: TextInputType.number,
-              onSubmitted: (_) => _submitData(),
-              // onChanged: (val) => amountInput = val,
-            ),
-            SizedBox(
-              height: 70,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      _selectedDate == null
-                          ? 'No Date Chosen!'
-                          : 'Picked Date: ${DateFormat.yMd().format(_selectedDate!)}',
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () => _presentDatePicker(),
-                    child: Text(
-                      'Choose Date',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  )
-                ],
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Container(
+          padding: EdgeInsets.only(
+            right: 10,
+            left: 10,
+            top: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextField(
+                controller: _titleController,
+                decoration: const InputDecoration(labelText: 'Title'),
+                onSubmitted: (_) => _submitData(),
+                // onChanged: (val) => titleInput = val,
               ),
-            ),
-            TextButton(
-              onPressed: _submitData,
-              child: const Text('Add Transcation'),
-              style: TextButton.styleFrom(
-                foregroundColor:
-                    Theme.of(context).buttonTheme.colorScheme!.background,
-                backgroundColor: Theme.of(context).colorScheme.primary,
+              TextField(
+                controller: _amountController,
+                decoration: const InputDecoration(labelText: 'Amount'),
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => _submitData(),
+                // onChanged: (val) => amountInput = val,
               ),
-            )
-          ],
+              SizedBox(
+                height: 70,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        _selectedDate == null
+                            ? 'No Date Chosen!'
+                            : 'Picked Date: ${DateFormat.yMd().format(_selectedDate!)}',
+                      ),
+                    ),
+                    AdaptiveFlatButton('Choose Date', _presentDatePicker),
+                  ],
+                ),
+              ),
+              TextButton(
+                onPressed: _submitData,
+                style: TextButton.styleFrom(
+                  foregroundColor:
+                      Theme.of(context).buttonTheme.colorScheme!.background,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                ),
+                child: const Text('Add Transcation'),
+              )
+            ],
+          ),
         ),
       ),
     );
